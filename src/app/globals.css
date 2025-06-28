@@ -1,26 +1,359 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  font-family: var(--font-poppins), sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.sideBar .social-icon {
+  transition: all 0.3s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+ul ol::before {
+  content: "✓";
+  font-size: 14px;
+  font-weight: 900;
+  padding-right: 10px;
+}
+
+.map {
+  background: url("../media/contactBg.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.icon2 {
+  @apply text-lg bg-[#20202a] w-12 h-12 flex justify-center items-center rounded-full cursor-pointer  hover:bg-yellow-500  hover:text-[#20202a] transition-all duration-150;
+}
+
+.lists {
+  position: relative;
+}
+.lists::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 5%;
+  width: 5px;
+  height: 100%;
+  background: #191923;
+}
+
+.box {
+  position: relative;
+}
+.box::after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.box::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  right: -11%;
+  width: 15px;
+  height: 15px;
+  background: #191923;
+  border: 3px solid var(--active);
+  border-radius: 50%;
+  transform: translateX(50%);
+  z-index: 2;
+  pointer-events: none;
+}
+.swiper-pagination {
+  position: absolute;
+  left: 0;
+  bottom: -20px;
+  background: #000;
+}
+.custom-swiper-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 5px;
+  border-radius: 10px;
+  background: var(--active) !important;
+  transition: all 0.3s ease-in;
+  cursor: pointer;
+  opacity: .3;
+}
+
+.custom-swiper-pagination .swiper-pagination-bullet-active {
+  width: 20px;
+  background: var(--active) !important;
+  opacity: 1 !important;
+}
+
+.box:hover::before {
+  animation: ping-shadow 1s infinite;
+}
+
+#tinyEditorDetails ul li ul {
+  list-style: inside;
+}
+
+#tinyEditorDetails ul li ul li {
+  position: relative;
+  list-style: none;
+  padding-left: 1.2em;
+}
+
+#tinyEditorDetails ul li ul li::before {
+  content: "✓";
+  color: var(--active); /* Your custom color */
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+
+li::marker {
+  color: var(--active); 
+}
+
+@keyframes ping-shadow {
+  0% {
+    box-shadow: 0 0 0 0 var(--active);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.fancybox__dialog{
+  width: calc(100vw - 30px) !important;
+  height: calc(100vh - 30px) !important;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+.fancybox__dialog .fancybox__backdrop{
+  background: rgba(32, 32, 42, 0.98);
+}
+
+.fancybox__dialog .f-carousel__toolbar{
+  background: linear-gradient(159deg, rgba(45, 45, 58, 0.88) 0%, rgba(43, 43, 53, 0.88) 100%);
+  display: flex;
+  justify-content: space-between;
+}
+.fancybox__dialog .f-carousel__toolbar .f-carousel__toolbar__column.is-middle{
+  display: none;
+}
+.fancybox__dialog .f-carousel__toolbar .f-carousel__toolbar__column.is-right [data-fullscreen-action="toggle"]{
+  display: none;
+}
+.fancybox__dialog .f-carousel__toolbar .f-carousel__toolbar__column.is-right .f-button{
+  background: transparent;
+}
+.f-carousel__toolbar .f-carousel__toolbar__column.is-left{
+  font-size: 12px;
+  color: #8c8c8e;
+  text-shadow: none;
+}
+
+.fancybox__viewport .f-panzoom__wrapper .f-panzoom__viewport{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fancybox__viewport .f-panzoom__wrapper .f-panzoom__content{
+  width: 70%;
+  height: 70%;
+}
+
+.bg {
+  background: url(../media/bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.details {
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 45, 45, 0.5);
+  z-index: 2;
+}
+.hide-scrollbar .scrollbar-thumb {
+  display: none;
+}
+.hide-scrollbar .scrollbar-track {
+  display: none !important;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes widthIncrease {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.preloader-bar::after {
+  animation: widthIncrease 2s forwards;
+}
+.transition-opacity {
+  transition: opacity 0.5s ease-in-out;
+}
+.custom-dot {
+  position: relative;
+  height: 50px;
+}
+.custom-dot::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #191923;
+  position: absolute;
+  top: 50%;
+  left: -7px;
+  transform: rotate(45deg) translateY(-50%);
+}
+
+.custom-dot::before {
+  position: absolute;
+  content: "I am available for freelance hire!";
+  font-size: 10px;
+  font-weight: 200;
+  color: #8c8c8e;
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: 115px;
+  height: fit-content;
+  background-color: #191923;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.bgOverlay {
+  @apply w-[90%] md:w-[85%] mx-auto flex justify-center items-center h-full relative overflow-hidden text-center md:text-start;
+}
+
+
+
+
+:root {
+  --mainBodyBg: #f8f8f9;
+  --container: #eee3bc;
+  --box: #96a8a6;
+  --subBox: #bdd2d0;
+  --title: #181816;
+  --subTitle: #4b5563;
+  --active: #c74d4d;
+  --default: #fafafc;
+  --structure: #1c1c27;
+  --iconBox: #7c9693;
+  --historyBox: #96a8a6;
+  --swapBg: #1e1e28;
+  --gradient: linear-gradient(0deg, #96a8a6 0%, #96a8a6 100%);
+}
+
+.dark {
+  --mainBodyBg: #191923;
+  --container: #1e1e28;
+  --box: #20202a;
+  --subBox: #252530;
+  --title: #fafafc;
+  --subTitle: #8c8c8e;
+  --active: #ffc107;
+  --default: #fafafc;
+  --structure: #1c1c27;
+  --iconBox: #252530;
+  --historyBox: #252530;
+  --swapBg: #eee3bc;
+  --gradient: linear-gradient(15deg, rgb(45, 45, 58) 0%, rgb(43, 43, 53) 100%);
+}
+
+.mainBg{
+  background: var(--mainBodyBg);
+}
+.bgHover:hover{
+  background: var(--mainBodyBg);
+}
+.containerBg{
+  background: var(--container);
+}
+.swapBg{
+  background: var(--swapBg);
+}
+.swapText{
+  color: var(--container);
+}
+.after::after{
+  background: var(--swapBg);
+}
+.boxBg{
+  background: var(--box);
+}
+.iconBoxBg{
+  background: var(--iconBox);
+}
+.subBoxBg{
+  background: var(--subBox);
+}
+.subBoxBorder{
+  border: var(--subBox);
+}
+.historyBox::after{
+  background: var(--historyBox);
+}
+.historyBox::before{
+  background: var(--historyBox);
+}
+.historyBox{
+  background: var(--historyBox);
+}
+
+.subtitleText::placeholder{
+  color:var(--subTitle);
+}
+
+.activeBg{
+  background: var(--active);
+}
+
+.titleText{
+  color: var(--title);
+}
+
+.textWithHover{
+  color: var(--title);
+}
+.textWithHover:hover{
+  color: var(--active);
+}
+
+.subTitleText{
+  color: var(--subTitle);
+}
+
+.activeText{
+  color: var(--active);
+}
+
+.defaultText{
+  color: var(--default);
+}
+
+.structureBg{
+  background: var(--structure);
+}
+
+.gradientBg{
+  background-image: var(--gradient);
 }

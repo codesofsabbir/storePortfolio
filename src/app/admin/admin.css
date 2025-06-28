@@ -1,0 +1,70 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+
+:root {
+  --mainBodyBg: #f8f8f9;
+  --container: #eee3bc;
+  --box: #96a8a6;
+  --subBox: #bdd2d0;
+  --title: #181816;
+  --subTitle: #4b5563;
+  --active: #c74d4d;
+  --default: #fafafc;
+  --structure: #1c1c27;
+  --iconBox: #7c9693;
+  --historyBox: #96a8a6;
+  --swapBg: #1e1e28;
+  --gradient: linear-gradient(0deg, #96a8a6 0%, #96a8a6 100%);
+}
+
+.dark {
+  --mainBodyBg: #191923;
+  --container: #1e1e28;
+  --box: #20202a;
+  --subBox: #252530;
+  --title: #fafafc;
+  --subTitle: #8c8c8e;
+  --active: #ffc107;
+  --default: #fafafc;
+  --structure: #1c1c27;
+  --iconBox: #252530;
+  --historyBox: #252530;
+  --swapBg: #eee3bc;
+  --gradient: linear-gradient(15deg, rgb(45, 45, 58) 0%, rgb(43, 43, 53) 100%);
+}
+
+.tox-promotion, .tox-statusbar__branding, .tox-statusbar__help-text, .tox-statusbar__path, .tox-statusbar__path-item{
+    display: none !important;
+}
+.tox-statusbar__right-container{
+    display: block !important;
+}
+.tox-tinymce, .tox-statusbar{
+    border: 2px solid var(--gradient) !important;
+}
+.tox-editor-header{
+    background: var(--gradient) !important;
+}
+.tox-menubar, .tox-toolbar-overlord, .tox-toolbar__primary, .tox-statusbar{
+    background: var(--gradient) !important;
+}
+.tox-statusbar__wordcount{
+    color: var(--subTitle) !important;
+}
+.mce-content-body, .tox-edit-area__iframe {
+    background: var(--gradient) !important;
+}
+.tox-mbtn, .tox-tbtn{
+    background: var(--subBox) !important;
+    color: var(--subTitle) !important;
+}
+.tox .tox-tbtn svg{
+    fill: var(--subTitle) !important;
+}
+.tox-statusbar__resize-handle{
+    display: none !important;
+}
+.tox.tox-tinymce{
+    height: 360px !important;
+}
