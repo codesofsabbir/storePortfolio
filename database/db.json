@@ -1,0 +1,31 @@
+[
+  {
+    "language": [
+      { "title": "bangla", "percent": "100%" },
+      { "title": "English", "percent": "100%" },
+      { "title": "hindi", "percent": "50%" }
+    ],
+    "technologies": [
+      { "title": "HTML", "percent": "95%" },
+      { "title": "CSS", "percent": "90%" },
+      { "title": "JavaScript", "percent": "85%" },
+      { "title": "React", "percent": "85%" },
+      { "title": "Next", "percent": "80%" },
+      { "title": "MongoDB", "percent": "80%" },
+      { "title": "Express", "percent": "0%" },
+      { "title": "Node", "percent": "0%" }
+    ],
+    "others": [
+      "Tailwind, SCSS, Bootstrap",
+      "Material UI, Shadcn UI, Hero UI",
+      "WordPress, Blogger, Webflow",
+      "WebRTC, WebSocket, Socket.IO",
+      "Auth.js, JWT, Stripe, Redux",
+      "Git, GitHub, Postman, VS Code",
+      "Word, Excel, PowerPoint, Access",
+      "ChatGPT, MidJourney, DALL·E, Gemini, Copilot",
+      "Vercel, JSON, REST API",
+      "Photoshop, CapCut"
+    ]
+  }
+]

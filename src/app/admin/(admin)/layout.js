@@ -1,7 +1,7 @@
 'use client'
 import React from "react";
-import AdminNavBar from "./Components/AdminNavBar";
-import TopBar from "./Components/TopBar";
+import AdminNavBar from "../../../Components/adminComponents/AdminNavBar";
+import TopBar from "../../../Components/adminComponents/TopBar";
 import { Scrollbar } from "smooth-scrollbar-react";
 function layout({ children }) {
   return (

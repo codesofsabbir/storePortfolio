@@ -5,25 +5,39 @@ import { usePathname } from "next/navigation";
 import { MdDashboard, MdDesignServices } from "react-icons/md";
 import { FiMessageSquare, FiSettings } from "react-icons/fi";
 import { RiFolder3Fill } from "react-icons/ri";
-import { FaRegNewspaper } from "react-icons/fa";
+import { FaRegNewspaper, FaTools } from "react-icons/fa";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 const data = [
-  { title: "Dashboard", icon: <MdDashboard />, link: "dashboard", dropdown: [] },
-  { title: "Messages", icon: <FiMessageSquare />, link: "messages", dropdown: [] },
+  {
+    title: "Dashboard",
+    icon: <MdDashboard />,
+    link: "dashboard",
+    dropdown: [],
+  },
+  {
+    title: "Messages",
+    icon: <FiMessageSquare />,
+    link: "messages",
+    dropdown: [],
+  },
+  {
+    title: "Skills",
+    icon: <FaTools />,
+    link: "skills",
+    dropdown: [],
+  },
   {
     title: "Projects",
     icon: <RiFolder3Fill />,
     link: "projects",
-    dropdown: [{ title: "Add New", icon: <IoMdAddCircleOutline />, link: "" }],
   },
   {
     title: "Blogs",
     icon: <FaRegNewspaper />,
     link: "blogs",
-    dropdown: [{ title: "Add New", icon: <IoMdAddCircleOutline />, link: "settings" }],
   },
-  { title: "Settings", icon: <FiSettings />, link: "settings", dropdown: [] },
+  { title: "Settings", icon: <FiSettings />, link: "settings" },
 ];
 
 function AdminNavBar() {

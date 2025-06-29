@@ -30,15 +30,15 @@ function Language({languages}) {
           className="flex flex-col items-center gap-2 justify-center"
         >
           <CircularProgressbar
-            value={lang.value}
-            text={`${lang.value}%`}
+            value={lang.percent}
+            text={`${lang.percent}%`}
             styles={buildStyles({
               textColor: isDark ? "#fafafc" : "#181816",
               pathColor: isDark ? "#ffc107" : "#c74d4d",
-              trailColor: isDark ? "#2c2c38" : "#eee3bc",
+              trailColor: isDark ? "#2c2c38" : "#2c2c38",
             })}
           />
-          <p className="titleText text-xs">{lang.name}</p>
+          <p className="titleText text-xs capitalize">{lang.title}</p>
         </div>
       ))}
     </div>

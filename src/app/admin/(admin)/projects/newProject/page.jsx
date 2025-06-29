@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import MultipleSelected from "../../Components/MultipleSelected";
-import BasicDatePicker from "../../Components/DatePicker";
-import MultipleImageUpload from "../../Components/MultipleImageUpload";
-import TinyEditor from "../../Components/TinyEditor";
-import SingleSelected from "../../Components/SingleSelected";
+import MultipleSelected from "../../../../../Components/adminComponents/MultipleSelected";
+import BasicDatePicker from "../../../../../Components/adminComponents/DatePicker";
+import MultipleImageUpload from "../../../../../Components/adminComponents/MultipleImageUpload";
+import TinyEditor from "../../../../../Components/adminComponents/TinyEditor";
+import SingleSelected from "../../../../../Components/adminComponents/SingleSelected";
 
 const technologies = [
   "Html",

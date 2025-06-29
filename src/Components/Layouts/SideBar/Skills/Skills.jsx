@@ -1,6 +1,6 @@
-"use client"; // if you're using Next.js App Router
+"use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Address from "./Address";
 import OtherSkills from "./OtherSkills";
 import DownloadButton from "./DownloadButton";
@@ -8,8 +8,20 @@ import SkillBars from "./SkillBars";
 import Language from "./Language";
 import { Scrollbar } from "smooth-scrollbar-react";
 
-function Skills({skills, residence, city, district}) {
-  
+function Skills({residence, city, district}) {
+  const [skills, setSkills] = useState({})
+  useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch("/api/skills");
+          const data = await response.json();
+          setSkills(Array.isArray(data) ? data[0] : data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+    }, []);
   return (
     <Scrollbar
       className="hide-scrollbar"
@@ -26,9 +38,9 @@ function Skills({skills, residence, city, district}) {
     >
       <div className="px-6 pt-5 h-[62%]">
         <Address residence={residence} city={city} district={district}/>
-        <Language languages={skills?.language} />
-        <SkillBars coding={skills?.coding} />
-        <OtherSkills softSkills={skills?.softSkills} />
+        <Language languages={skills?.languages} />
+        <SkillBars technologies={skills?.technologies} />
+        <OtherSkills others={skills?.others} />
         <DownloadButton />
       </div>
     </Scrollbar>
