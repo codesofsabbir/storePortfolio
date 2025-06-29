@@ -5,10 +5,6 @@ const developerDetailSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  modalImage: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
