@@ -96,7 +96,7 @@ const Settings = () => {
   if (loading || !details) return <div>Loading...</div>;
 
   return (
-    <div className="p-6">
+    <div className="">
       <div className="grid grid-cols-3 gap-7">
         {/* Profile Section */}
         <div className="py-5 px-10 rounded flex flex-col justify-center items-center gradientBg relative">

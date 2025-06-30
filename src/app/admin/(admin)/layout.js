@@ -9,7 +9,7 @@ function layout({ children }) {
       <div className="containerBg w-[calc(100%-30px)] h-[calc(100vh-30px)] flex relative">
         <TopBar />
         <AdminNavBar />
-        <div className="mt-20 ml-20 px-7 py-7 w-full overflow-y-auto">
+        <div className="mt-20 px-7 py-7 w-full overflow-y-auto">
           <Scrollbar
             className="hide-scrollbar"
             plugins={{

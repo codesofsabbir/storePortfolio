@@ -260,6 +260,7 @@ li::marker {
   --iconBox: #7c9693;
   --historyBox: #96a8a6;
   --swapBg: #1e1e28;
+  --chartBg: #ffffff;
   --gradient: linear-gradient(0deg, #96a8a6 0%, #96a8a6 100%);
 }
 
@@ -276,9 +277,12 @@ li::marker {
   --iconBox: #252530;
   --historyBox: #252530;
   --swapBg: #eee3bc;
+  --chartBg: #20202a;
   --gradient: linear-gradient(15deg, rgb(45, 45, 58) 0%, rgb(43, 43, 53) 100%);
 }
-
+.chartBg{
+  background: var(--chartBg);
+}
 .mainBg{
   background: var(--mainBodyBg);
 }
