@@ -1,243 +1,176 @@
 "use client";
-import ActionButtons from "@/Components/adminComponents/ActionButtons";
 import React, { useEffect, useState } from "react";
+import ActionButtons from "@/Components/adminComponents/ActionButtons";
 
-function Page() {
-  const [skills, setSkills] = useState({ languages: [], technologies: [], others: [] });
+const initialSkillState = { languages: [], technologies: [], others: [] };
 
-  const [languagesMode, setLanguagesMode] = useState("default");
-  const [technologiesMode, setTechnologiesMode] = useState("default");
-  const [othersMode, setOthersMode] = useState("default");
+export default function Page() {
+  const [skills, setSkills] = useState(initialSkillState);
+  const [modes, setModes] = useState({
+    languages: "default",
+    technologies: "default",
+    others: "default",
+  });
 
-  const [newLang, setNewLang] = useState({ title: "", percent: "" });
-  const [newTech, setNewTech] = useState({ title: "", percent: "" });
-  const [newOther, setNewOther] = useState("");
+  const [newItems, setNewItems] = useState({
+    languages: { title: "", percent: "" },
+    technologies: { title: "", percent: "" },
+    others: "",
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSkills = async () => {
       try {
-        const response = await fetch("/api/skills");
-        const data = await response.json();
+        const res = await fetch("/api/skills");
+        const data = await res.json();
         setSkills(Array.isArray(data) ? data[0] : data);
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        console.error("Failed to fetch skills:", err);
       }
     };
-    fetchData();
+    fetchSkills();
   }, []);
 
   const updateSkills = async (updated) => {
     try {
-      const response = await fetch("/api/skills", {
+      const res = await fetch("/api/skills", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updated),
       });
-      if (!response.ok) throw new Error("Failed to update skills");
+      if (!res.ok) throw new Error("Update failed");
       setSkills(updated);
-    } catch (error) {
-      console.error("Update error:", error);
+    } catch (err) {
+      console.error("Update error:", err);
     }
   };
 
-  // Languages
-  const handleLangSave = () => {
-    const updated = { ...skills, languages: [...skills.languages, newLang] };
+  const handleSave = (type) => {
+    const updated = { ...skills };
+    if (type === "others") {
+      updated.others.push(newItems.others);
+      setNewItems({ ...newItems, others: "" });
+    } else {
+      updated[type].push(newItems[type]);
+      setNewItems({ ...newItems, [type]: { title: "", percent: "" } });
+    }
     updateSkills(updated);
-    setNewLang({ title: "", percent: "" });
-    setLanguagesMode("default");
-  };
-  const handleLangUpdate = () => {
-    updateSkills(skills);
-    setLanguagesMode("default");
+    setModes({ ...modes, [type]: "default" });
   };
 
-  // Technologies
-  const handleTechSave = () => {
-    const updated = { ...skills, technologies: [...skills.technologies, newTech] };
-    updateSkills(updated);
-    setNewTech({ title: "", percent: "" });
-    setTechnologiesMode("default");
-  };
-  const handleTechUpdate = () => {
+  const handleUpdate = (type) => {
     updateSkills(skills);
-    setTechnologiesMode("default");
+    setModes({ ...modes, [type]: "default" });
   };
 
-  // Others
-  const handleOtherSave = () => {
-    const updated = { ...skills, others: [...skills.others, newOther] };
-    updateSkills(updated);
-    setNewOther("");
-    setOthersMode("default");
-  };
-  const handleOtherUpdate = () => {
-    updateSkills(skills);
-    setOthersMode("default");
-  };
+  const renderList = (type) => (
+    <div className="py-5 px-10 rounded flex flex-col justify-center gradientBg relative">
+      <ActionButtons
+        mode={modes[type]}
+        onSave={() => handleSave(type)}
+        onCancel={() => setModes({ ...modes, [type]: "default" })}
+        onAdd={() => setModes({ ...modes, [type]: "add" })}
+        onEdit={() => setModes({ ...modes, [type]: "edit" })}
+        onUpdate={() => handleUpdate(type)}
+      />
+
+      {modes[type] === "add" && (
+        <div className="mb-3 flex gap-3">
+          {type !== "others" ? (
+            <>
+              <input
+                value={newItems[type].title}
+                onChange={(e) =>
+                  setNewItems({
+                    ...newItems,
+                    [type]: { ...newItems[type], title: e.target.value },
+                  })
+                }
+                placeholder="Title"
+                className="input"
+              />
+              <input
+                value={newItems[type].percent}
+                onChange={(e) =>
+                  setNewItems({
+                    ...newItems,
+                    [type]: { ...newItems[type], percent: e.target.value },
+                  })
+                }
+                placeholder="Percent"
+                className="input w-24" // or w-20, w-16 based on your layout
+              />
+            </>
+          ) : (
+            <input
+              value={newItems.others}
+              onChange={(e) =>
+                setNewItems({ ...newItems, others: e.target.value })
+              }
+              placeholder="New Skill"
+              className="input w-full"
+            />
+          )}
+        </div>
+      )}
+
+      {skills[type].map((item, idx) => (
+        <li className="flex justify-between" key={idx}>
+          {modes[type] === "edit" ? (
+            type !== "others" ? (
+              <>
+                <input
+                  value={item.title}
+                  onChange={(e) => {
+                    const updated = [...skills[type]];
+                    updated[idx].title = e.target.value;
+                    setSkills({ ...skills, [type]: updated });
+                  }}
+                  className="input"
+                />
+                <input
+                  value={item.percent}
+                  onChange={(e) => {
+                    const updated = [...skills[type]];
+                    updated[idx].percent = e.target.value;
+                    setSkills({ ...skills, [type]: updated });
+                  }}
+                  className="input w-24"
+                />
+              </>
+            ) : (
+              <input
+                value={item}
+                onChange={(e) => {
+                  const updated = [...skills.others];
+                  updated[idx] = e.target.value;
+                  setSkills({ ...skills, others: updated });
+                }}
+                className="input"
+              />
+            )
+          ) : (
+            <>
+              <span className="titleText capitalize">
+                {type !== "others" ? `${item.title}:` : item}
+              </span>
+              {type !== "others" && (
+                <span className="subTitleText">{item.percent}</span>
+              )}
+            </>
+          )}
+        </li>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="p-6">
-      <div className="grid grid-cols-2 gap-7">
-        <div className="grid gap-7">
-          {/* Languages */}
-          <div className="py-5 px-10 rounded flex flex-col justify-center gradientBg relative">
-            <ActionButtons
-              mode={languagesMode}
-              onSave={handleLangSave}
-              onCancel={() => setLanguagesMode("default")}
-              onAdd={() => setLanguagesMode("add")}
-              onEdit={() => setLanguagesMode("edit")}
-              onUpdate={handleLangUpdate}
-            />
-            {languagesMode === "add" && (
-              <div className="mb-3 flex gap-3">
-                <input
-                  value={newLang.title}
-                  onChange={(e) => setNewLang({ ...newLang, title: e.target.value })}
-                  placeholder="Language"
-                  className="input"
-                />
-                <input
-                  value={newLang.percent}
-                  onChange={(e) => setNewLang({ ...newLang, percent: e.target.value })}
-                  placeholder="Percent"
-                  className="input"
-                />
-              </div>
-            )}
-            {skills.languages.map((lang, index) => (
-              <li className="flex justify-between" key={index}>
-                {languagesMode === "edit" ? (
-                  <>
-                    <input
-                      value={lang.title}
-                      onChange={(e) => {
-                        const updated = [...skills.languages];
-                        updated[index].title = e.target.value;
-                        setSkills({ ...skills, languages: updated });
-                      }}
-                      className="input"
-                    />
-                    <input
-                      value={lang.percent}
-                      onChange={(e) => {
-                        const updated = [...skills.languages];
-                        updated[index].percent = e.target.value;
-                        setSkills({ ...skills, languages: updated });
-                      }}
-                      className="input"
-                    />
-                  </>
-                ) : (
-                  <>
-                    {lang.title}: <span className="subTitleText">{lang.percent}</span>
-                  </>
-                )}
-              </li>
-            ))}
-          </div>
-
-          {/* Technologies */}
-          <div className="py-5 px-10 rounded flex flex-col justify-center gradientBg relative">
-            <ActionButtons
-              mode={technologiesMode}
-              onSave={handleTechSave}
-              onCancel={() => setTechnologiesMode("default")}
-              onAdd={() => setTechnologiesMode("add")}
-              onEdit={() => setTechnologiesMode("edit")}
-              onUpdate={handleTechUpdate}
-            />
-            {technologiesMode === "add" && (
-              <div className="mb-3 flex gap-3">
-                <input
-                  value={newTech.title}
-                  onChange={(e) => setNewTech({ ...newTech, title: e.target.value })}
-                  placeholder="Technology"
-                  className="input"
-                />
-                <input
-                  value={newTech.percent}
-                  onChange={(e) => setNewTech({ ...newTech, percent: e.target.value })}
-                  placeholder="Percent"
-                  className="input"
-                />
-              </div>
-            )}
-            {skills.technologies.map((tech, index) => (
-              <li className="flex justify-between" key={index}>
-                {technologiesMode === "edit" ? (
-                  <>
-                    <input
-                      value={tech.title}
-                      onChange={(e) => {
-                        const updated = [...skills.technologies];
-                        updated[index].title = e.target.value;
-                        setSkills({ ...skills, technologies: updated });
-                      }}
-                      className="input"
-                    />
-                    <input
-                      value={tech.percent}
-                      onChange={(e) => {
-                        const updated = [...skills.technologies];
-                        updated[index].percent = e.target.value;
-                        setSkills({ ...skills, technologies: updated });
-                      }}
-                      className="input"
-                    />
-                  </>
-                ) : (
-                  <>
-                    {tech.title}: <span className="subTitleText">{tech.percent}</span>
-                  </>
-                )}
-              </li>
-            ))}
-          </div>
-        </div>
-
-        {/* Others */}
-        <div className="grid">
-          <div className="py-5 px-10 rounded flex flex-col gradientBg relative">
-            <ActionButtons
-              mode={othersMode}
-              onSave={handleOtherSave}
-              onCancel={() => setOthersMode("default")}
-              onAdd={() => setOthersMode("add")}
-              onEdit={() => setOthersMode("edit")}
-              onUpdate={handleOtherUpdate}
-            />
-            {othersMode === "add" && (
-              <input
-                value={newOther}
-                onChange={(e) => setNewOther(e.target.value)}
-                placeholder="New Skill"
-                className="input mb-3"
-              />
-            )}
-            {skills.others.map((other, index) => (
-              <li className="flex justify-between" key={index}>
-                {othersMode === "edit" ? (
-                  <input
-                    value={other}
-                    onChange={(e) => {
-                      const updated = [...skills.others];
-                      updated[index] = e.target.value;
-                      setSkills({ ...skills, others: updated });
-                    }}
-                    className="input"
-                  />
-                ) : (
-                  <>{other}</>
-                )}
-              </li>
-            ))}
-          </div>
-        </div>
+    <div className="p-6 grid grid-cols-2 gap-7">
+      <div className="grid gap-7">
+        {renderList("languages")}
+        {renderList("technologies")}
       </div>
+      <div className="grid">{renderList("others")}</div>
     </div>
   );
 }
-
-export default Page;
